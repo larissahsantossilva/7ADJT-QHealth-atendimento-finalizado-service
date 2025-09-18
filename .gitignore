@@ -1,0 +1,72 @@
+### Diretórios e arquivos de compilação ###
+HELP.md
+target/
+bin/
+build/
+!.mvn/wrapper/maven-wrapper.jar
+!**/src/main/**/target/
+!**/src/test/**/target/
+
+### STS ###
+.apt_generated
+.classpath
+.factorypath
+.project
+.settings
+.springBeans
+.sts4-cache
+
+### IntelliJ IDEA ###
+.idea
+*.iws
+*.iml
+*.ipr
+out/
+
+### NetBeans ###
+/nbproject/private/
+/nbbuild/
+/dist/
+/nbdist/
+/.nb-gradle/
+build/
+!**/src/main/**/build/
+!**/src/test/**/build/
+
+### VS Code ###
+.vscode/
+
+### Arquivos de log ###
+*.log
+
+### Arquivos do sistema operacional ###
+.DS_Store
+Thumbs.db
+
+### Arquivos de dependências ###
+*.jar
+*.war
+*.ear
+
+### Arquivos gerados pelo Maven ###
+.mvn/
+dependency-reduced-pom.xml
+
+### Arquivos gerados pelo Gradle ###
+.gradle/
+build/
+
+### Arquivos temporários e cache ###
+*.class
+*.swp
+*.swo
+*.tmp
+
+### Configuração específica do ambiente ###
+*.properties.local
+
+### Diretórios do cache do Lombok ###
+.lombok/
+
+### Diretório do teste do allure report ###
+allure-results/
