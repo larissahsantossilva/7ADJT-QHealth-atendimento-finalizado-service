@@ -1,4 +1,4 @@
-INSERT INTO atendimento
+INSERT INTO atendimento_finalizado.atendimento
 (paciente_id,
  status,
  fila_id,
