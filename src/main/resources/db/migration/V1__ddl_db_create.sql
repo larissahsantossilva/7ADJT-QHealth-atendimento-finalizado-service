@@ -2,7 +2,7 @@ CREATE SCHEMA IF NOT EXISTS atendimento_finalizado;
 
 CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
 
-CREATE TABLE atendimento (
+CREATE TABLE atendimento_finalizado.atendimento (
     id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
     paciente_id UUID NOT NULL,
     status VARCHAR(255) NOT NULL,

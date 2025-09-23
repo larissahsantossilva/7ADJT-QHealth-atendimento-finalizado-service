@@ -5,7 +5,6 @@ import br.com.fiap.qhealth.dto.request.AtendimentoBodyRequest;
 import br.com.fiap.qhealth.dto.response.AtendimentoBodyResponse;
 import br.com.fiap.qhealth.exception.ResourceNotFoundException;
 import br.com.fiap.qhealth.model.Atendimento;
-import org.modelmapper.ModelMapper;
 
 import java.util.UUID;
 
@@ -22,19 +21,38 @@ public class QHealthUtils {
         }
     }
 
-    // Conversões para Atendimento
-    public static Atendimento convertToAtendimento(AtendimentoBodyRequest atendimentoBodyRequest) {
-        ModelMapper modelMapper = new ModelMapper();
-        return modelMapper.map(atendimentoBodyRequest, Atendimento.class);
+    // ----------- Atendimento -----------
+
+    // Request → Entity
+    public static Atendimento convertToAtendimento(AtendimentoBodyRequest dto) {
+        return Atendimento.builder()
+                .pacienteId(dto.getPacienteId())
+                .status(dto.getStatus())
+                .filaId(dto.getFilaId())
+                .posicaoFila(dto.getPosicaoFila())
+                .build();
     }
 
-    public static Atendimento convertToAtendimento(AtendimentoAtualizarBodyRequest atendimentoAtualizarBodyRequest) {
-        ModelMapper modelMapper = new ModelMapper();
-        return modelMapper.map(atendimentoAtualizarBodyRequest, Atendimento.class);
+    // Update Request → Entity
+    public static Atendimento convertToAtendimento(AtendimentoAtualizarBodyRequest dto) {
+        return Atendimento.builder()
+                .pacienteId(dto.getPacienteId())
+                .status(dto.getStatus())
+                .filaId(dto.getFilaId())
+                .posicaoFila(dto.getPosicaoFila())
+                .build();
     }
 
+    // Entity → Response
     public static AtendimentoBodyResponse convertToAtendimento(Atendimento entity) {
-        ModelMapper modelMapper = new ModelMapper();
-        return modelMapper.map(entity, AtendimentoBodyResponse.class);
+        return new AtendimentoBodyResponse(
+                entity.getId(),
+                entity.getPacienteId(),
+                entity.getStatus(),
+                entity.getFilaId(),
+                entity.getPosicaoFila(),
+                entity.getDataCriacao(),
+                entity.getDataUltimaAlteracao()
+        );
     }
 }
