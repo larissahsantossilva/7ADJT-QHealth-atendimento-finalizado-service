@@ -36,15 +36,15 @@ public class AtendimentoController {
     private final AtendimentoService atendimentoService;
 
     @Operation(
-            description = "Lista todos os atendimentos de forma paginada.",
-            summary = "Lista atendimentos paginados.",
-            responses = {
-                    @ApiResponse(
-                            description = OK,
-                            responseCode = HTTP_STATUS_CODE_200,
-                            content = @Content(mediaType = "application/json", schema = @Schema(implementation = Atendimento.class))
-                    )
-            }
+        description = "Lista todos os atendimentos de forma paginada.",
+        summary = "Lista atendimentos paginados.",
+        responses = {
+            @ApiResponse(
+                description = OK,
+                responseCode = HTTP_STATUS_CODE_200,
+                content = @Content(mediaType = "application/json", schema = @Schema(implementation = Atendimento.class))
+            )
+        }
     )
     @GetMapping
     public ResponseEntity<List<AtendimentoBodyResponse>> listarAtendimentos(
@@ -60,20 +60,20 @@ public class AtendimentoController {
     }
 
     @Operation(
-            description = "Busca atendimento por id.",
-            summary = "Busca atendimento por id.",
-            responses = {
-                    @ApiResponse(
-                            description = OK,
-                            responseCode = HTTP_STATUS_CODE_200,
-                            content = @Content(mediaType = "application/json", schema = @Schema(implementation = Atendimento.class))
-                    ),
-                    @ApiResponse(
-                            description = NOT_FOUND,
-                            responseCode = HTTP_STATUS_CODE_404,
-                            content = @Content(mediaType = "application/json", schema = @Schema(implementation = Void.class))
-                    )
-            }
+        description = "Busca atendimento por id.",
+        summary = "Busca atendimento por id.",
+        responses = {
+            @ApiResponse(
+                description = OK,
+                responseCode = HTTP_STATUS_CODE_200,
+                content = @Content(mediaType = "application/json", schema = @Schema(implementation = Atendimento.class))
+            ),
+            @ApiResponse(
+                description = NOT_FOUND,
+                responseCode = HTTP_STATUS_CODE_404,
+                content = @Content(mediaType = "application/json", schema = @Schema(implementation = Void.class))
+            )
+        }
     )
     @GetMapping("/{id}")
     public ResponseEntity<AtendimentoBodyResponse> buscarAtendimentoPorId(@PathVariable("id") UUID id) {
@@ -88,20 +88,20 @@ public class AtendimentoController {
     }
 
     @Operation(
-            description = "Cria atendimento.",
-            summary = "Cria atendimento.",
-            responses = {
-                    @ApiResponse(
-                            description = ATENDIMENTO_CRIADO_COM_SUCESSO,
-                            responseCode = HTTP_STATUS_CODE_201,
-                            content = @Content(mediaType = "application/json", schema = @Schema(implementation = String.class))
-                    ),
-                    @ApiResponse(
-                            description = ERRO_AO_CRIAR_ATENDIMENTO,
-                            responseCode = HTTP_STATUS_CODE_422,
-                            content = @Content(mediaType = "application/json", schema = @Schema(implementation = String.class))
-                    )
-            }
+        description = "Cria atendimento.",
+        summary = "Cria atendimento.",
+        responses = {
+            @ApiResponse(
+                description = ATENDIMENTO_CRIADO_COM_SUCESSO,
+                responseCode = HTTP_STATUS_CODE_201,
+                content = @Content(mediaType = "application/json", schema = @Schema(implementation = String.class))
+            ),
+            @ApiResponse(
+                description = ERRO_AO_CRIAR_ATENDIMENTO,
+                responseCode = HTTP_STATUS_CODE_422,
+                content = @Content(mediaType = "application/json", schema = @Schema(implementation = String.class))
+            )
+        }
     )
     @PostMapping
     public ResponseEntity<UUID> criarAtendimento(@Valid @RequestBody AtendimentoBodyRequest atendimentoBodyRequest) {
@@ -112,25 +112,25 @@ public class AtendimentoController {
     }
 
     @Operation(
-            description = "Atualiza atendimento por id.",
-            summary = "Atualiza atendimento por id.",
-            responses = {
-                    @ApiResponse(
-                            description = OK,
-                            responseCode = HTTP_STATUS_CODE_200,
-                            content = @Content(mediaType = "application/json", schema = @Schema(implementation = Void.class))
-                    ),
-                    @ApiResponse(
-                            description = ATENDIMENTO_NAO_ENCONTRADO,
-                            responseCode = HTTP_STATUS_CODE_404,
-                            content = @Content(mediaType = "application/json", schema = @Schema(implementation = String.class))
-                    ),
-                    @ApiResponse(
-                            description = ERRO_AO_ALTERAR_ATENDIMENTO,
-                            responseCode = HTTP_STATUS_CODE_422,
-                            content = @Content(mediaType = "application/json", schema = @Schema(implementation = String.class))
-                    )
-            }
+        description = "Atualiza atendimento por id.",
+        summary = "Atualiza atendimento por id.",
+        responses = {
+            @ApiResponse(
+                description = OK,
+                responseCode = HTTP_STATUS_CODE_200,
+                content = @Content(mediaType = "application/json", schema = @Schema(implementation = Void.class))
+            ),
+            @ApiResponse(
+                description = ATENDIMENTO_NAO_ENCONTRADO,
+                responseCode = HTTP_STATUS_CODE_404,
+                content = @Content(mediaType = "application/json", schema = @Schema(implementation = String.class))
+            ),
+            @ApiResponse(
+                description = ERRO_AO_ALTERAR_ATENDIMENTO,
+                responseCode = HTTP_STATUS_CODE_422,
+                content = @Content(mediaType = "application/json", schema = @Schema(implementation = String.class))
+            )
+        }
     )
     @PutMapping("/{id}")
     public ResponseEntity<String> atualizarAtendimento(@PathVariable("id") UUID id,
@@ -142,20 +142,20 @@ public class AtendimentoController {
     }
 
     @Operation(
-            description = "Exclui atendimento por id.",
-            summary = "Exclui atendimento por id.",
-            responses = {
-                    @ApiResponse(
-                            description = NO_CONTENT,
-                            responseCode = HTTP_STATUS_CODE_204,
-                            content = @Content(mediaType = "application/json", schema = @Schema(implementation = Void.class))
-                    ),
-                    @ApiResponse(
-                            description = ATENDIMENTO_NAO_ENCONTRADO,
-                            responseCode = HTTP_STATUS_CODE_404,
-                            content = @Content(mediaType = "application/json", schema = @Schema(implementation = String.class))
-                    )
-            }
+        description = "Exclui atendimento por id.",
+        summary = "Exclui atendimento por id.",
+        responses = {
+            @ApiResponse(
+                description = NO_CONTENT,
+                responseCode = HTTP_STATUS_CODE_204,
+                content = @Content(mediaType = "application/json", schema = @Schema(implementation = Void.class))
+            ),
+            @ApiResponse(
+                description = ATENDIMENTO_NAO_ENCONTRADO,
+                responseCode = HTTP_STATUS_CODE_404,
+                content = @Content(mediaType = "application/json", schema = @Schema(implementation = String.class))
+            )
+        }
     )
     @DeleteMapping("/{id}")
     public ResponseEntity<String> excluirAtendimento(@PathVariable("id") UUID id) {

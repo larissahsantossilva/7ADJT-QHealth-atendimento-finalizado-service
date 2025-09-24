@@ -16,7 +16,7 @@ import java.util.UUID;
 public class AtendimentoBodyRequest {
 
     @NotNull(message = "Paciente é obrigatório")
-    private UUID pacienteId;
+    private String cpf;
 
     @NotBlank(message = "Status é obrigatório")
     private String status;
