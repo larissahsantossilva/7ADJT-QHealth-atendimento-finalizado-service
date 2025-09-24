@@ -33,9 +33,6 @@ public class Atendimento {
     @Column(name = "fila_id", nullable = false)
     private UUID filaId;
 
-    @Column(name = "posicao_fila", nullable = false)
-    private Integer posicaoFila;
-
     @CreationTimestamp
     @Column(name = "data_criacao", nullable = false, updatable = false)
     private LocalDateTime dataCriacao;

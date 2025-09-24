@@ -29,8 +29,7 @@ public class QHealthUtils {
                 .cpf(dto.getCpf())
                 .status(dto.getStatus())
                 .filaId(dto.getFilaId())
-                .posicaoFila(dto.getPosicaoFila())
-                .build();
+            .build();
     }
 
     // Update Request → Entity
@@ -39,20 +38,18 @@ public class QHealthUtils {
                 .cpf(dto.getCpf())
                 .status(dto.getStatus())
                 .filaId(dto.getFilaId())
-                .posicaoFila(dto.getPosicaoFila())
-                .build();
+            .build();
     }
 
     // Entity → Response
     public static AtendimentoBodyResponse convertToAtendimento(Atendimento entity) {
         return new AtendimentoBodyResponse(
-                entity.getId(),
-                entity.getCpf(),
-                entity.getStatus(),
-                entity.getFilaId(),
-                entity.getPosicaoFila(),
-                entity.getDataCriacao(),
-                entity.getDataUltimaAlteracao()
+            entity.getId(),
+            entity.getCpf(),
+            entity.getStatus(),
+            entity.getFilaId(),
+            entity.getDataCriacao(),
+            entity.getDataUltimaAlteracao()
         );
     }
 }

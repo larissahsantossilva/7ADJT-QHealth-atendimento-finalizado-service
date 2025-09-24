@@ -23,8 +23,4 @@ public class AtendimentoBodyRequest {
 
     @NotNull(message = "Fila é obrigatória")
     private UUID filaId;
-
-    @NotNull(message = "Posição na fila é obrigatória")
-    @Positive(message = "A posição deve ser maior que zero")
-    private Integer posicaoFila;
 }

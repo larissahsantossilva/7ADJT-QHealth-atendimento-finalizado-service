@@ -2,11 +2,10 @@ INSERT INTO atendimento_finalizado.atendimento
 (cpf,
  status,
  fila_id,
- posicao_fila,
  data_criacao,
  data_ultima_alteracao)
 VALUES
-('12312312345', 'FINALIZADO', uuid_generate_v4(), 1, CURRENT_TIMESTAMP - INTERVAL '10 days', CURRENT_TIMESTAMP - INTERVAL '9 days');
+('12312312345', 'FINALIZADO', uuid_generate_v4(), CURRENT_TIMESTAMP - INTERVAL '10 days', CURRENT_TIMESTAMP - INTERVAL '9 days');
 --(uuid_generate_v4(), 'CANCELADO', uuid_generate_v4(), 2, CURRENT_TIMESTAMP - INTERVAL '8 days', CURRENT_TIMESTAMP - INTERVAL '7 days'),
 --(uuid_generate_v4(), 'EM_ANDAMENTO', uuid_generate_v4(), 3, CURRENT_TIMESTAMP - INTERVAL '6 days', CURRENT_TIMESTAMP - INTERVAL '5 days'),
 --(uuid_generate_v4(), 'FINALIZADO', uuid_generate_v4(), 4, CURRENT_TIMESTAMP - INTERVAL '5 days', CURRENT_TIMESTAMP - INTERVAL '4 days'),
