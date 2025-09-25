@@ -16,15 +16,11 @@ import java.util.UUID;
 public class AtendimentoBodyRequest {
 
     @NotNull(message = "Paciente é obrigatório")
-    private UUID pacienteId;
+    private String cpf;
 
     @NotBlank(message = "Status é obrigatório")
     private String status;
 
     @NotNull(message = "Fila é obrigatória")
     private UUID filaId;
-
-    @NotNull(message = "Posição na fila é obrigatória")
-    @Positive(message = "A posição deve ser maior que zero")
-    private Integer posicaoFila;
 }

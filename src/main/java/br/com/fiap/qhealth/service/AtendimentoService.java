@@ -74,10 +74,9 @@ public class AtendimentoService {
 
     private static void atualizarCampos(Atendimento novo, Atendimento existente) {
         if (novo != null) {
-            if (novo.getPacienteId() != null) existente.setPacienteId(novo.getPacienteId());
+            if (novo.getCpf() != null) existente.setCpf(novo.getCpf());
             if (novo.getStatus() != null) existente.setStatus(novo.getStatus());
             if (novo.getFilaId() != null) existente.setFilaId(novo.getFilaId());
-            if (novo.getPosicaoFila() != null) existente.setPosicaoFila(novo.getPosicaoFila());
             existente.setDataUltimaAlteracao(now());
         }
     }

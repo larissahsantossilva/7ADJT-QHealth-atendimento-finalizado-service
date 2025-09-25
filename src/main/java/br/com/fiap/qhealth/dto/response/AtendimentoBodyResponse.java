@@ -15,13 +15,11 @@ public class AtendimentoBodyResponse {
 
     private UUID id;
 
-    private UUID pacienteId;
+    private String cpf;
 
     private String status;
 
     private UUID filaId;
-
-    private Integer posicaoFila;
 
     private LocalDateTime dataCriacao;
 

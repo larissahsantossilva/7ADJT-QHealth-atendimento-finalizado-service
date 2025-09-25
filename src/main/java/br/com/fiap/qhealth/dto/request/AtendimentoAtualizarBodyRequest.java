@@ -15,7 +15,7 @@ import java.util.UUID;
 @Schema(description = "DTO para atualizar atendimento")
 public class AtendimentoAtualizarBodyRequest {
 
-    private UUID pacienteId;
+    private String cpf;
 
     private String status;
 

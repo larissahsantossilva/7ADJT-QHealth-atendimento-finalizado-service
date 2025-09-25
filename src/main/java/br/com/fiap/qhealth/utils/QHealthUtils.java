@@ -26,33 +26,30 @@ public class QHealthUtils {
     // Request → Entity
     public static Atendimento convertToAtendimento(AtendimentoBodyRequest dto) {
         return Atendimento.builder()
-                .pacienteId(dto.getPacienteId())
+                .cpf(dto.getCpf())
                 .status(dto.getStatus())
                 .filaId(dto.getFilaId())
-                .posicaoFila(dto.getPosicaoFila())
-                .build();
+            .build();
     }
 
     // Update Request → Entity
     public static Atendimento convertToAtendimento(AtendimentoAtualizarBodyRequest dto) {
         return Atendimento.builder()
-                .pacienteId(dto.getPacienteId())
+                .cpf(dto.getCpf())
                 .status(dto.getStatus())
                 .filaId(dto.getFilaId())
-                .posicaoFila(dto.getPosicaoFila())
-                .build();
+            .build();
     }
 
     // Entity → Response
     public static AtendimentoBodyResponse convertToAtendimento(Atendimento entity) {
         return new AtendimentoBodyResponse(
-                entity.getId(),
-                entity.getPacienteId(),
-                entity.getStatus(),
-                entity.getFilaId(),
-                entity.getPosicaoFila(),
-                entity.getDataCriacao(),
-                entity.getDataUltimaAlteracao()
+            entity.getId(),
+            entity.getCpf(),
+            entity.getStatus(),
+            entity.getFilaId(),
+            entity.getDataCriacao(),
+            entity.getDataUltimaAlteracao()
         );
     }
 }

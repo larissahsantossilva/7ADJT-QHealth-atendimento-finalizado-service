@@ -24,17 +24,14 @@ public class Atendimento {
     @GeneratedValue(strategy = AUTO)
     private UUID id;
 
-    @Column(name = "paciente_id", nullable = false)
-    private UUID pacienteId;
+    @Column(name = "cpf", nullable = false)
+    private String cpf;
 
     @Column(nullable = false, length = 255)
     private String status;
 
     @Column(name = "fila_id", nullable = false)
     private UUID filaId;
-
-    @Column(name = "posicao_fila", nullable = false)
-    private Integer posicaoFila;
 
     @CreationTimestamp
     @Column(name = "data_criacao", nullable = false, updatable = false)
