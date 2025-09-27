@@ -21,6 +21,8 @@ public class AtendimentoBodyResponse {
 
     private UUID filaId;
 
+    private Integer posicaoFila;
+
     private LocalDateTime dataCriacao;
 
     private LocalDateTime dataUltimaAlteracao;

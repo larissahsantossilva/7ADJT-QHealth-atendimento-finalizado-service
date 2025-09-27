@@ -7,7 +7,7 @@ CREATE TABLE atendimento_finalizado.atendimento (
     cpf VARCHAR(11) NOT NULL,
     status VARCHAR(255) NOT NULL,
     fila_id UUID NOT NULL,
-    data_criacao TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    data_criacao TIMESTAMP NOT NULL,
     data_ultima_alteracao TIMESTAMP
 );
 

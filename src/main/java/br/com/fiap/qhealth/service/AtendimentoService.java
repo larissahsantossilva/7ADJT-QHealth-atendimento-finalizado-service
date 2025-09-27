@@ -4,11 +4,13 @@ import br.com.fiap.qhealth.exception.ResourceNotFoundException;
 import br.com.fiap.qhealth.exception.UnprocessableEntityException;
 import br.com.fiap.qhealth.model.Atendimento;
 import br.com.fiap.qhealth.repository.AtendimentoRepository;
+import jakarta.persistence.EntityManager;
 import lombok.AllArgsConstructor;
 import org.slf4j.Logger;
 import org.springframework.dao.DataAccessException;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.UUID;
 
@@ -23,8 +25,8 @@ import static org.springframework.data.domain.PageRequest.of;
 public class AtendimentoService {
 
     private static final Logger logger = getLogger(AtendimentoService.class);
-
     private final AtendimentoRepository atendimentoRepository;
+    private final EntityManager entityManager;
 
     public Page<Atendimento> listarAtendimentos(int page, int size) {
         return atendimentoRepository.findAll(of(page, size));
@@ -36,29 +38,49 @@ public class AtendimentoService {
                 new ResourceNotFoundException(ID_NAO_ENCONTRADO));
     }
 
-    public Atendimento criarAtendimento(Atendimento atendimento) {
+    @Transactional
+    public Atendimento criarAtendimento(Atendimento atendimento, boolean fromRabbit) {
         try {
-            atendimento.setDataCriacao(now());
-            atendimento.setDataUltimaAlteracao(now());
-            return atendimentoRepository.save(atendimento);
+            if (atendimento.getId() == null) {
+                atendimento.setId(UUID.randomUUID());
+            }
+
+            if (fromRabbit) {
+                // usa as datas do payload
+                if (atendimento.getDataCriacao() == null) {
+                    atendimento.setDataCriacao(now()); // fallback
+                }
+                if (atendimento.getDataUltimaAlteracao() == null) {
+                    atendimento.setDataUltimaAlteracao(now());
+                }
+            } else {
+                // origem: API → força as datas atuais
+                atendimento.setDataCriacao(now());
+                atendimento.setDataUltimaAlteracao(now());
+            }
+
+            return atendimentoRepository.saveAndFlush(atendimento);
+
         } catch (DataAccessException e) {
             logger.error(ERRO_AO_CRIAR_ATENDIMENTO, e);
             throw new UnprocessableEntityException(ERRO_AO_CRIAR_ATENDIMENTO);
         }
     }
 
+    @Transactional
     public void atualizarAtendimentoExistente(Atendimento atendimento, UUID id) {
         Atendimento atendimentoExistente = atendimentoRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException(ATENDIMENTO_NAO_ENCONTRADO));
         atualizarCampos(atendimento, atendimentoExistente);
         try {
-            atendimentoRepository.save(atendimentoExistente);
+            atendimentoRepository.saveAndFlush(atendimentoExistente);
         } catch (DataAccessException e) {
             logger.error(ERRO_AO_ALTERAR_ATENDIMENTO, e);
             throw new UnprocessableEntityException(ERRO_AO_ALTERAR_ATENDIMENTO);
         }
     }
 
+    @Transactional
     public void excluirAtendimentoPorId(UUID id) {
         uuidValidator(id);
         Atendimento atendimento = atendimentoRepository.findById(id)
@@ -79,5 +101,17 @@ public class AtendimentoService {
             if (novo.getFilaId() != null) existente.setFilaId(novo.getFilaId());
             existente.setDataUltimaAlteracao(now());
         }
+    }
+
+    @Transactional(readOnly = true)
+    public int calcularPosicaoFila(UUID atendimentoId, UUID filaId) {
+        var atendimentosFila = atendimentoRepository.findByFilaIdOrderByDataCriacaoAsc(filaId);
+
+        for (int i = 0; i < atendimentosFila.size(); i++) {
+            if (atendimentosFila.get(i).getId().equals(atendimentoId)) {
+                return i + 1;
+            }
+        }
+        return -1; // não encontrado
     }
 }

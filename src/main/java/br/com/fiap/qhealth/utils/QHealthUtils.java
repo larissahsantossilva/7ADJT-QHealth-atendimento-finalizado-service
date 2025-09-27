@@ -42,14 +42,15 @@ public class QHealthUtils {
     }
 
     // Entity → Response
-    public static AtendimentoBodyResponse convertToAtendimento(Atendimento entity) {
+    public static AtendimentoBodyResponse convertToAtendimento(Atendimento entity, int posicaoFila) {
         return new AtendimentoBodyResponse(
-            entity.getId(),
-            entity.getCpf(),
-            entity.getStatus(),
-            entity.getFilaId(),
-            entity.getDataCriacao(),
-            entity.getDataUltimaAlteracao()
+                entity.getId(),
+                entity.getCpf(),
+                entity.getStatus(),
+                entity.getFilaId(),
+                posicaoFila,
+                entity.getDataCriacao(),
+                entity.getDataUltimaAlteracao()
         );
     }
 }
