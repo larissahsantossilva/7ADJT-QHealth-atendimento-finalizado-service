@@ -50,11 +50,17 @@ public class AtendimentoController {
     public ResponseEntity<List<AtendimentoBodyResponse>> listarAtendimentos(
             @RequestParam(value = "page", defaultValue = "0") int page,
             @RequestParam(value = "size", defaultValue = "10") int size) {
+
         logger.info("GET | {} | Iniciado listarAtendimentos", V1_ATENDIMENTO_FINALIZADO);
         Page<Atendimento> atendimentos = atendimentoService.listarAtendimentos(page, size);
+
         List<AtendimentoBodyResponse> lista = atendimentos.stream()
-                .map(QHealthUtils::convertToAtendimento)
+                .map(a -> QHealthUtils.convertToAtendimento(
+                        a,
+                        atendimentoService.calcularPosicaoFila(a.getId(), a.getFilaId())
+                ))
                 .toList();
+
         logger.info("GET | {} | Finalizado listarAtendimentos", V1_ATENDIMENTO_FINALIZADO);
         return ok(lista);
     }
@@ -80,8 +86,9 @@ public class AtendimentoController {
         logger.info("GET | {} | Iniciado buscarAtendimentoPorId | id: {}", V1_ATENDIMENTO_FINALIZADO, id);
         var atendimento = atendimentoService.buscarAtendimentoPorId(id);
         if (atendimento != null) {
+            int posicao = atendimentoService.calcularPosicaoFila(atendimento.getId(), atendimento.getFilaId());
             logger.info("GET | {} | Finalizado buscarAtendimentoPorId | id: {}", V1_ATENDIMENTO_FINALIZADO, id);
-            return ok(convertToAtendimento(atendimento));
+            return ok(QHealthUtils.convertToAtendimento(atendimento, posicao));
         }
         logger.info("GET | {} | Atendimento não encontrado | id: {}", V1_ATENDIMENTO_FINALIZADO, id);
         return status(404).build();
@@ -106,7 +113,7 @@ public class AtendimentoController {
     @PostMapping
     public ResponseEntity<UUID> criarAtendimento(@Valid @RequestBody AtendimentoBodyRequest atendimentoBodyRequest) {
         logger.info("POST | {} | Iniciado criarAtendimento", V1_ATENDIMENTO_FINALIZADO);
-        Atendimento atendimento = atendimentoService.criarAtendimento(convertToAtendimento(atendimentoBodyRequest));
+        Atendimento atendimento = atendimentoService.criarAtendimento(convertToAtendimento(atendimentoBodyRequest), false);
         logger.info("POST | {} | Finalizado criarAtendimento", V1_ATENDIMENTO_FINALIZADO);
         return status(201).body(atendimento.getId());
     }

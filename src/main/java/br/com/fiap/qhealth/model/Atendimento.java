@@ -21,7 +21,7 @@ import static java.time.LocalDateTime.now;
 @Table(name = "atendimento", schema = "atendimento_finalizado")
 public class Atendimento {
     @Id
-    @GeneratedValue(strategy = AUTO)
+    @Column(nullable = false, updatable = false)
     private UUID id;
 
     @Column(name = "cpf", nullable = false)
@@ -33,21 +33,9 @@ public class Atendimento {
     @Column(name = "fila_id", nullable = false)
     private UUID filaId;
 
-    @CreationTimestamp
     @Column(name = "data_criacao", nullable = false, updatable = false)
     private LocalDateTime dataCriacao;
 
     @Column(name = "data_ultima_alteracao")
     private LocalDateTime dataUltimaAlteracao;
-
-    @PrePersist
-    protected void onCreate() {
-        this.dataCriacao = now();
-        this.dataUltimaAlteracao = now();
-    }
-
-    @PreUpdate
-    protected void onUpdate() {
-        this.dataUltimaAlteracao = now();
-    }
 }
