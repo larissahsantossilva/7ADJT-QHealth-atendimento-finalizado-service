@@ -9,5 +9,7 @@ import java.util.UUID;
 
 @Repository
 public interface AtendimentoRepository extends JpaRepository<Atendimento, UUID> {
-    List<Atendimento> findByFilaIdOrderByDataCriacaoAsc(UUID filaId);
+
+    List<Atendimento> findByFilaIdAndStatusNotOrderByDataCriacaoAsc(UUID filaId, String status);
+
 }
