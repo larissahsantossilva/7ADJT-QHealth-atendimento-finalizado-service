@@ -105,13 +105,15 @@ public class AtendimentoService {
 
     @Transactional(readOnly = true)
     public int calcularPosicaoFila(UUID atendimentoId, UUID filaId) {
-        var atendimentosFila = atendimentoRepository.findByFilaIdOrderByDataCriacaoAsc(filaId);
+        // Busca todos da fila exceto os finalizados
+        var atendimentosFila = atendimentoRepository
+                .findByFilaIdAndStatusNotOrderByDataCriacaoAsc(filaId, "FINALIZADO");
 
         for (int i = 0; i < atendimentosFila.size(); i++) {
             if (atendimentosFila.get(i).getId().equals(atendimentoId)) {
                 return i + 1;
             }
         }
-        return -1; // não encontrado
+        return -1; // não encontrado (ou está finalizado)
     }
 }

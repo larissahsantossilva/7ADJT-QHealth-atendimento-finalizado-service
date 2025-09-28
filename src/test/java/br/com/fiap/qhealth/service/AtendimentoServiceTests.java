@@ -155,10 +155,20 @@ class AtendimentoServiceTest {
     @Test
     void testCalcularPosicaoFila() {
         UUID filaId = UUID.randomUUID();
-        Atendimento a1 = Atendimento.builder().id(UUID.randomUUID()).filaId(filaId).build();
-        Atendimento a2 = Atendimento.builder().id(id).filaId(filaId).build();
+        Atendimento a1 = Atendimento.builder()
+                .id(UUID.randomUUID())
+                .filaId(filaId)
+                .status("AGUARDANDO")
+                .build();
 
-        when(repository.findByFilaIdOrderByDataCriacaoAsc(filaId)).thenReturn(List.of(a1, a2));
+        Atendimento a2 = Atendimento.builder()
+                .id(id)
+                .filaId(filaId)
+                .status("EM_ATENDIMENTO")
+                .build();
+
+        when(repository.findByFilaIdAndStatusNotOrderByDataCriacaoAsc(filaId, "FINALIZADO"))
+                .thenReturn(List.of(a1, a2));
 
         int posicao = service.calcularPosicaoFila(id, filaId);
 
@@ -168,12 +178,35 @@ class AtendimentoServiceTest {
     @Test
     void testCalcularPosicaoFila_NaoEncontrado() {
         UUID filaId = UUID.randomUUID();
-        Atendimento a1 = Atendimento.builder().id(UUID.randomUUID()).filaId(filaId).build();
+        Atendimento a1 = Atendimento.builder()
+                .id(UUID.randomUUID())
+                .filaId(filaId)
+                .status("AGUARDANDO")
+                .build();
 
-        when(repository.findByFilaIdOrderByDataCriacaoAsc(filaId)).thenReturn(List.of(a1));
+        when(repository.findByFilaIdAndStatusNotOrderByDataCriacaoAsc(filaId, "FINALIZADO"))
+                .thenReturn(List.of(a1));
 
         int posicao = service.calcularPosicaoFila(id, filaId);
 
         assertEquals(-1, posicao);
+    }
+
+    @Test
+    void testCalcularPosicaoFila_AtendimentoFinalizadoNaoConta() {
+        UUID filaId = UUID.randomUUID();
+        Atendimento finalizado = Atendimento.builder()
+                .id(id)
+                .filaId(filaId)
+                .status("FINALIZADO")
+                .build();
+
+        // Simula que o repo ignora finalizados
+        when(repository.findByFilaIdAndStatusNotOrderByDataCriacaoAsc(filaId, "FINALIZADO"))
+                .thenReturn(List.of());
+
+        int posicao = service.calcularPosicaoFila(id, filaId);
+
+        assertEquals(-1, posicao); // finalizado não entra na fila
     }
 }
